@@ -13,21 +13,11 @@ app.listen(8000, () => {
 });
 
 app.use(function (req, res, next) {
-
-    // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-
-    // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-    // Pass to next layer of middleware
     next();
 });
 
@@ -42,11 +32,11 @@ app.post('/api/email', function (req, res) {
     });
 
     options = {
-        from: req.body.email, // sender address (who sends)
-        to: 'erwan.herledan@outlook.fr', // list of receivers (who receives)
-        subject: 'Vous avez reçu un message de ' + req.body.name, // Subject line
-        text: 'Hello world ', // plaintext body
-        html: req.body.message // html body
+        from: req.body.name,
+        to: 'erwan.herledan@outlook.fr',
+        subject: 'Vous avez reçu un message de ' + req.body.name,
+        html: "From: " + req.body.name + "<br>" +
+        "Email: " + req.body.email + "<br>" +     "Message: " + req.body.message
     };
 
     transport.sendMail(options, function (error, response) {
